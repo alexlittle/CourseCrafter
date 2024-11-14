@@ -174,7 +174,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = '/admin/'
 LOGIN_REDIRECT_URL = '/'
 
-NOTES_ASSISTANT_ENABLED = False
+CRAFTER_OLLAMA_MODEL = "llama3.2:latest"
 
 try:
     from config.local_settings import *
