@@ -175,6 +175,7 @@ LOGIN_URL = '/admin/'
 LOGIN_REDIRECT_URL = '/'
 
 CRAFTER_OLLAMA_MODEL = "llama3.2:latest"
+CRAFTER_EMBEDDING_MODEL = "sentence-transformers/all-mpnet-base-v2"
 
 try:
     from config.local_settings import *
