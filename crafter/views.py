@@ -1,5 +1,6 @@
-from django.http import HttpResponse
+from django.views.generic import TemplateView
 
 
-def index(request):
-    return HttpResponse("Hello, world. You're at the crafter index.")
+class HomeView(TemplateView):
+    template_name = 'crafter/home.html'
+
