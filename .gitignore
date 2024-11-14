@@ -137,8 +137,6 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
-/crafter
 
 # mypy
 .mypy_cache/
