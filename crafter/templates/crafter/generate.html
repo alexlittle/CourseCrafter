@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_scripts %}
+<script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+{% endblock extra_scripts %}
+
+{% block content %}
+
+<h1>{{ course.shortname }} - {{ course.title }}</h1>
+
+{% for r in courseresources %}
+    <li>{{ r.url }}</li>
+{% endfor %}
+
+<form method="post">
+        {% csrf_token %}
+
+        <button type="submit">{% trans 'Generate course outline' %}</button>
+    </form>
+
+<div class="container" style="padding-top: 20px;">
+	<div class="card" style="height: 120px;">
+		{% block progress %}{% endblock progress %}
+	</div>
+</div>
+
+{% block progress_bar_js %}
+{% endblock progress_bar_js %}
+{% endblock %}

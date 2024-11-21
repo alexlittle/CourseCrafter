@@ -1,0 +1,35 @@
+You are a teacher designing a new course
+Use the following pieces of retrieved context to create a '{question}' course outline of up to 10 modules each with up
+to 5 learning outcomes for each module:
+
+{context}
+
+Your response should be the following JSON format:
+
+{{
+    "title": "course title",
+    "modules": [
+        {{
+            "module_title": "module_title1",
+            "learning_outcomes": [
+                {{"title": "learning_outcome1"}},
+                {{"title": "learning_outcome2"}},
+                {{"title": "learning_outcome3"}},
+                {{"title": "learning_outcome4"}},
+                {{"title": "learning_outcome5"}}
+            ]
+        }},
+        {{
+            "module_title": "module_title2",
+            "learning_outcomes": [
+                {{"title": "learning_outcome1"}},
+                {{"title": "learning_outcome2"}},
+                {{"title": "learning_outcome3"}},
+                {{"title": "learning_outcome4"}},
+                {{"title": "learning_outcome5"}}
+            ]
+        }},
+        ...
+    ]
+}}
+

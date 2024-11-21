@@ -73,11 +73,11 @@ class CourseCrafterAI():
     def format_docs(self, docs):
         return "\n\n".join(doc.page_content for doc in docs)
 
-    def query(self, question, template='recommend'):
+    def query(self, question, template='course_outline'):
 
         rag_prompt = PromptTemplate.from_template(self.get_prompt_template(template))
 
-        retriever = self.vs.as_retriever(search_kwargs={"k": 10})
+        retriever = self.vs.as_retriever(search_kwargs={"k": 100})
 
         rag_chain = (
                 {"context": retriever | self.format_docs, "question": RunnablePassthrough()}

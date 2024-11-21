@@ -1,0 +1,1 @@
+from crafter.asynctasks import process_course

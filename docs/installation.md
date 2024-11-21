@@ -6,6 +6,7 @@ Prerequisites
 
 * Python 3.11
 * [Ollama](https://ollama.com/), with the llama3.2:latest model, installed (you can change the model in the settings if you prefer something else)
+* Redis server installed 
 
 Installing
 ------------

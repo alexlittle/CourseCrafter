@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load humanize %}
+
+{% block extra_scripts %}
+<script>
+        function addForm() {
+            const formCount = document.querySelectorAll('.form-row').length;
+            const formTemplate = document.querySelector('.form-row-template').cloneNode(true);
+            formTemplate.classList.remove('form-row-template');
+            formTemplate.classList.add('form-row');
+            formTemplate.style.display = 'flex';
+
+            // Update form index
+            const formRegex = /__prefix__/g;
+            formTemplate.innerHTML = formTemplate.innerHTML.replace(formRegex, formCount);
+
+            document.querySelector('#form-container').appendChild(formTemplate);
+        }
+
+        function deleteForm(button) {
+            button.closest('.form-row').remove();
+        }
+    </script>
+{% endblock extra_scripts %}
+
+{% block content %}
+<form method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <div id="form-container">
+            <div class="form-row">
+                    {{ courseform.shortname.label_tag }}
+                    {{ courseform.shortname }}
+
+                </div>
+
+            <div class="form-row">
+                    {{ courseform.title.label_tag }}
+                    {{ courseform.title }}
+
+                </div>
+
+            {% for form in formset %}
+                <div class="form-row">
+                    {{ form.url.label_tag }}
+                    {{ form.url }}
+                    <button type="button" onclick="deleteForm(this)">Remove</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Hidden template -->
+        <div class="form-row form-row-template" style="display:none;">
+            {{ formset.empty_form.url.label_tag }}
+            {{ formset.empty_form.url }}
+            <button type="button" onclick="deleteForm(this)">Remove</button>
+        </div>
+
+        <button type="button" onclick="addForm()">Add Another URL</button>
+        <button type="submit">Submit</button>
+    </form>
+
+
+{% endblock %}
