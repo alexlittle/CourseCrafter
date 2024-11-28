@@ -181,8 +181,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_URL = '/admin/'
 LOGIN_REDIRECT_URL = '/'
 
-CRAFTER_OLLAMA_MODEL = "llama3.2:latest"
+CRAFTER_CHAT_ENGINE = "ollama" # currently can be openai or ollama
+CRAFTER_CHAT_ENGINE_MODEL = "llama3.2:latest"
 CRAFTER_EMBEDDING_MODEL = "sentence-transformers/all-mpnet-base-v2"
+
+OPENAI_API_KEY = ""
 
 try:
     from config.local_settings import *

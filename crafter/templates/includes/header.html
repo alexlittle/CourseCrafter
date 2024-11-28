@@ -11,11 +11,22 @@
     {% trans 'CourseCrafter' %}
   </a>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse justify-content-end" id="navbarScroll">
+      <ul class="navbar-nav ms-auto my-2 my-lg-0 navbar-nav-scroll" >
+        {% if user.is_authenticated %}
+            <li>{% trans 'Welcome' %}, {{ user.username }}</li>
+            <li><a href="{% url 'crafter:setup' %}">{% trans 'Set up new course' %}</a></li>
+            <li> <form method="post" action="{% url 'crafter:logout' %}" style="display: inline;">
+                {% csrf_token %}
+            <button type="submit">{% trans 'Logout' %}</button>
+         </form></li>
 
-		    </ul>
+        {% else %}
+            <li><a href="{% url 'crafter:login' %}">{% trans 'Login' %}</a></li>
+        {% endif %}
+    </ul>
 
-  </div>
+    </div>
 </nav>
 	    
 	    

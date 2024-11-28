@@ -26,7 +26,7 @@ class CourseResource(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     create_date = models.DateTimeField(default=timezone.now)
     url = models.CharField(max_length=300, blank=True, null=True, default=None)
-    file = models.FileField(upload_to=user_directory_path)
+    file = models.FileField(upload_to=user_directory_path, blank=True, null=True, default=None)
 
 
 class CourseVersion(models.Model):
@@ -34,6 +34,7 @@ class CourseVersion(models.Model):
     course = models.ForeignKey(Course, null=False, related_name='courseversions', on_delete=models.CASCADE)
     create_date = models.DateTimeField(default=timezone.now)
     version_number = models.IntegerField(default=1)
+    title = models.CharField(max_length=100, blank=True, null=True, default=None)
     description = models.TextField(blank=True, null=True, default=None)
     prompt_used = models.TextField(blank=True, null=True, default=None)
 

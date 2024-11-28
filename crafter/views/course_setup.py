@@ -1,13 +1,11 @@
 from django.views.generic import TemplateView, FormView
-from .forms import CourseLinkFormSet, CourseForm
+from crafter.forms import CourseLinkFormSet, CourseForm
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.shortcuts import render
-from .models import Course, CourseResource
-from .asynctasks.process_course import ProcessDownload
+from crafter.models import Course, CourseResource
+from crafter.asynctasks.generate_course import generate_course
 
-class HomeView(TemplateView):
-    template_name = 'crafter/home.html'
 
 
 class SetupCourseView(FormView):
@@ -53,9 +51,9 @@ class GenerateCourseView(TemplateView):
 
     def post(self, request, *args, **kwargs):
         # Create Task
-        download_task = ProcessDownload.delay()
+        gen_task = generate_course.delay(self.kwargs.get('id'), request.user.id)
         # Get ID
-        task_id = download_task.task_id
+        task_id = gen_task.task_id
         # Print Task ID
         print(f'Celery Task ID: {task_id}')
         # Return demo view with Task ID

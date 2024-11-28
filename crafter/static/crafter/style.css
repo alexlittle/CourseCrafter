@@ -64,6 +64,10 @@ body {
 	color: #010101;
 }
 
+.navbar-nav > li {
+    margin-right:10px;
+}
+
 .navbar-light .navbar-nav > .nav-item > a:focus, 
 .navbar-light .navbar-nav > .nav-item > a:hover 
 {
@@ -80,7 +84,7 @@ body {
 /* h tags
 -------------------------------------------------- */
 
-.h1, .h2, .h3, h1, h2, h3 {
+.h1, .h2, h1, h2 {
     margin-top: 50px;
     margin-bottom: 20px;
 }
@@ -97,6 +101,10 @@ h2 {
 	font-size: 130%;
 }
 
+h3 {
+	color: #04689a;
+	font-size: 110%;
+}
 
 
 .content-text {

@@ -1,1 +1,1 @@
-from crafter.asynctasks import process_course
+from crafter.asynctasks import generate_course

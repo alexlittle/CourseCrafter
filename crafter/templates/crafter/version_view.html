@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+<h1>{{ version.title }}</h1>
+
+
+{% for module in version.coursemodules.all %}
+    <h2>{{ module.title }}</h2>
+    <h3>{% trans 'Learning Outcomes' %}</h3>
+
+    <h3>{% trans 'Activities' %}</h3>
+
+
+    <h3>{% trans 'Quiz Questions' %}</h3>
+{% endfor %}
+{% endblock %}

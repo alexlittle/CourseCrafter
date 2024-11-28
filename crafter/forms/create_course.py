@@ -19,4 +19,4 @@ class CourseLinkForm(forms.Form):
     )
 
 # Create a formset
-CourseLinkFormSet = formset_factory(CourseLinkForm, extra=3, max_num=2, min_num=1)
+CourseLinkFormSet = formset_factory(CourseLinkForm, extra=3, min_num=1)

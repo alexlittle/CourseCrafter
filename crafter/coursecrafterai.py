@@ -11,10 +11,12 @@ from langchain_huggingface.embeddings import HuggingFaceEmbeddings
 from langchain_core.runnables import RunnablePassthrough
 from langchain_chroma import Chroma
 from langchain_ollama.llms import OllamaLLM
-from langchain_core.output_parsers import StrOutputParser
+from langchain_openai import ChatOpenAI
+from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 from langchain.prompts import PromptTemplate
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -22,7 +24,8 @@ class CourseCrafterAI():
 
     vs = None
     llm = None
-    llm_model = settings.CRAFTER_OLLAMA_MODEL
+    llm_engine = settings.CRAFTER_CHAT_ENGINE
+    llm_engine_model = settings.CRAFTER_CHAT_ENGINE_MODEL
     embedding_model = settings.CRAFTER_EMBEDDING_MODEL
     vs_data_dir = os.path.join(BASE_DIR, "datastore")
     chunk_size = 5000
@@ -59,8 +62,17 @@ class CourseCrafterAI():
             print("failed to connect to {}".format(url))
             return False, None
 
-    def init_chat(self):
-        self.llm = OllamaLLM(model=self.llm_model, temperature=0)
+    def init_chat(self, temperature=0.7):
+        if self.llm_engine == "openai":
+            if not os.environ.get("OPENAI_API_KEY"):
+                os.environ["OPENAI_API_KEY"] = settings.OPENAI_API_KEY
+            self.llm =  ChatOpenAI(model=self.llm_engine_model, temperature=temperature)
+        elif self.llm_engine == "google-genai":
+            if "GOOGLE_API_KEY" not in os.environ:
+                os.environ["GOOGLE_API_KEY"] = settings.GOOGLE_GEN_AI_API_KEY
+            self.llm = ChatGoogleGenerativeAI(model=self.llm_engine_model, temperature=temperature)
+        else:
+            self.llm = OllamaLLM(model=self.llm_engine_model, temperature=temperature)
 
     def get_vs(self):
         return self.vs
@@ -83,7 +95,7 @@ class CourseCrafterAI():
                 {"context": retriever | self.format_docs, "question": RunnablePassthrough()}
                 | rag_prompt
                 | self.llm
-                | StrOutputParser()
+                | JsonOutputParser()
         )
 
         return rag_chain.invoke(question)

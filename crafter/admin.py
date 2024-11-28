@@ -15,7 +15,7 @@ class CourseResourceAdmin(admin.ModelAdmin):
 
 @admin.register(CourseVersion)
 class CourseVersionAdmin(admin.ModelAdmin):
-    list_display = ('course', 'create_date', 'version_number', 'description')
+    list_display = ('course', 'title', 'version_number', 'create_date', 'description')
 
 
 @admin.register(CourseVersionLearningOutcome)

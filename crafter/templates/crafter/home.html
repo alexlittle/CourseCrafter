@@ -1,9 +1,31 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 {% load humanize %}
 
 {% block content %}
 
+<h1>{% trans 'Welcome to CourseCrafter!' %}</h1>
 
+<p>
+    {% blocktrans %}
+    This is a prototype site, so not everything may work correctly and it may be slow!
+    {% endblocktrans %}
+</p>
+
+{% if courses %}
+    <h2>{% trans 'Your courses' %}</h2>
+    <ul>
+    {% for course in courses %}
+        <li>{{ course.title }} ({{ course.shortname }}) [<a href="{% url 'crafter:generate' course.id %}">{% trans 'create new version' %}</a>]
+            <ul>
+                {% for version in course.courseversions.all %}
+                <li><a href="{% url 'crafter:versionview' version.id %}">{{ version.title }} ({{ version.version_number }})</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
 
 {% endblock %}
