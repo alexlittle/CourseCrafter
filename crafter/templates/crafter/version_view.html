@@ -10,8 +10,13 @@
 
 {% for module in version.coursemodules.all %}
     <h2>{{ module.title }}</h2>
-    <h3>{% trans 'Learning Outcomes' %}</h3>
 
+    <h3>{% trans 'Learning Outcomes' %}</h3>
+    <ol>
+    {% for lo in module.coursemodulelos.all  %}
+        <li>{{ lo.learning_outcome }}</li>
+    {% endfor %}
+    </ol>
     <h3>{% trans 'Activities' %}</h3>
 
 

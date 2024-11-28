@@ -2,7 +2,10 @@ import json
 
 from celery import shared_task
 from celery_progress.backend import ProgressRecorder
+
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 from crafter.models import Course, CourseResource, CourseVersion, CourseModule, CourseModuleLearningOutcome
 from crafter.coursecrafterai import CourseCrafterAI
 
@@ -34,8 +37,6 @@ def generate_course(self, course_id, user_id):
 	response = ccai.query(course.title)
 	progress_recorder.set_progress(total, total, description="processing response")
 
-	print(response)
-
 	course_json = response
 	# course version
 	course_version = CourseVersion()
@@ -60,4 +61,4 @@ def generate_course(self, course_id, user_id):
 			cmlo.order_by = idxl +1
 			cmlo.save()
 
-	return response
+	return "Your course has been created. <a href='{}'>View your course</a>".format(reverse('crafter:versionview', kwargs={'id': course_version.id }))

@@ -38,6 +38,11 @@ class CourseVersion(models.Model):
     description = models.TextField(blank=True, null=True, default=None)
     prompt_used = models.TextField(blank=True, null=True, default=None)
 
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            latest_version = CourseVersion.objects.filter(course=self.course).order_by('-version_number').first()
+            self.version_number = latest_version.version_number + 1 if latest_version else 1
+        super().save(*args, **kwargs)
 
 class CourseVersionLearningOutcome(models.Model):
     course_version = models.ForeignKey(CourseVersion, null=True, related_name='courseversionlos', on_delete=models.CASCADE)
