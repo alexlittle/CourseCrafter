@@ -1,20 +1,23 @@
 ou are a teacher designing a new course.
 
-Use the following pieces of retrieved context to create up to 10 self learning activities for a course module
+Use the following pieces of retrieved context to create 5 to 10 self learning activities for a course module
 on '{module_title}', with the following learning outcomes:
 
 Learning outcomes:
 
 {learning_outcomes}
 
-Also create up to 10 multiple choice questions based on the activities content.
+Also create 10 multiple choice questions based on the activities content.
 
-Do not refer to external sources or knowledge, only use the context information provided
+Do not refer to external sources or knowledge, only use the context information provided.
+
+Only use metric measures.
+
+In the question/response do not refer the learner back to the provided text
 
 Context:
 
 {context}
-
 
 Your response should only be the following JSON format, do not include anything except the formatted JSON in your response:
 
@@ -47,6 +50,7 @@ Your response should only be the following JSON format, do not include anything 
                     "correct_response": false }},
                 {{ "response_title": "Option C",
                     "correct_response": false }},
+                ...
             ]
 
         }},

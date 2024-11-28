@@ -14,4 +14,6 @@ urlpatterns = [
     path("course/setup", views.SetupCourseView.as_view(), name="setup"),
     path("course/<int:id>/generate", views.GenerateCourseView.as_view(), name="generate"),
     path("course/version/<int:id>/view", views.CourseVersionView.as_view(), name="versionview"),
+
+    path("course/version/<int:id>/run/pre-test", views.PreTestView.as_view(), name="pretest"),
 ]

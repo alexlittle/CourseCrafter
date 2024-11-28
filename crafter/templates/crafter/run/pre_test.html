@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load humanize %}
+
+{% block extra_scripts %}
+<script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+{% endblock extra_scripts %}
+
+{% block content %}
+
+<h1>{{ course.title }} ({{ course.course.shortname }})</h1>
+
+<h2>Pre-test</h2>
+
+{% for q in questions %}
+    <h3>{{ q.question }}</h3>
+    {% for r in q.questionresponses.all %}
+        <li>{{ r.response }}</li>
+    {% endfor %}
+{% endfor %}
+
+{{ form.as_p }}
+
+{% endblock %}
