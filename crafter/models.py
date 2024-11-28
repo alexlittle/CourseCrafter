@@ -72,5 +72,13 @@ class CourseModuleLearningActivity(models.Model):
     description = models.TextField(blank=True, null=True, default=None)
     order_by = models.IntegerField(default=0)
 
+class ModuleQuestion(models.Model):
+    course_module = models.ForeignKey(CourseModule, related_name='modulequestions', on_delete=models.CASCADE)
+    question = models.TextField(blank=False, null=False)
+
+class ModuleResponseOption(models.Model):
+    module_question = models.ForeignKey(ModuleQuestion, related_name='questionresponses', on_delete=models.CASCADE)
+    response = models.TextField(blank=False, null=False)
+    score = models.IntegerField(default=0)
 
 

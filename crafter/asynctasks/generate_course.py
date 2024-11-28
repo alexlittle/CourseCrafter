@@ -6,8 +6,10 @@ from celery_progress.backend import ProgressRecorder
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-from crafter.models import Course, CourseResource, CourseVersion, CourseModule, CourseModuleLearningOutcome
+from crafter.models import Course, CourseResource
 from crafter.coursecrafterai import CourseCrafterAI
+from crafter.response_processors.course_outline import course_outline_postprocess
+
 
 # Celery Task
 @shared_task(bind=True)
@@ -37,28 +39,6 @@ def generate_course(self, course_id, user_id):
 	response = ccai.query(course.title)
 	progress_recorder.set_progress(total, total, description="processing response")
 
-	course_json = response
-	# course version
-	course_version = CourseVersion()
-	course_version.user = user
-	course_version.course = course
-	course_version.title = course_json['title']
-	course_version.save()
-
-	# course modules
-	for idxm, module in enumerate(course_json['modules']):
-		course_module = CourseModule()
-		course_module.course_version = course_version
-		course_module.title = module['module_title']
-		course_module.order_by = idxm+1
-		course_module.save()
-
-		# course modules LOs
-		for idxl, lo in enumerate(module['learning_outcomes']):
-			cmlo = CourseModuleLearningOutcome()
-			cmlo.course_module = course_module
-			cmlo.learning_outcome = lo['title']
-			cmlo.order_by = idxl +1
-			cmlo.save()
+	course_version = course_outline_postprocess(course, user, response)
 
 	return "Your course has been created. <a href='{}'>View your course</a>".format(reverse('crafter:versionview', kwargs={'id': course_version.id }))

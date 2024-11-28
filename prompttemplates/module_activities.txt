@@ -1,0 +1,55 @@
+ou are a teacher designing a new course.
+
+Use the following pieces of retrieved context to create up to 10 self learning activities for a course module
+on '{module_title}', with the following learning outcomes:
+
+Learning outcomes:
+
+{learning_outcomes}
+
+Also create up to 10 multiple choice questions based on the activities content.
+
+Do not refer to external sources or knowledge, only use the context information provided
+
+Context:
+
+{context}
+
+
+Your response should only be the following JSON format, do not include anything except the formatted JSON in your response:
+
+{{
+    "activities": [
+        {{
+            "activity_title": "Activity title 1",
+            "activity_description": "Activity description"
+
+        }},
+        {{
+            "activity_title": "Activity title 2",
+            "activity_description": "Activity description"
+
+        }},
+        {{
+            "activity_title": "Activity title 3",
+            "activity_description": "Activity description"
+
+        }},
+        ...
+    ],
+    "questions": [
+        {{
+            "question_title": "What is the question?",
+            "response_options": [
+                {{ "response_title": "Option A",
+                    "correct_response": true }},
+                {{ "response_title": "Option B",
+                    "correct_response": false }},
+                {{ "response_title": "Option C",
+                    "correct_response": false }},
+            ]
+
+        }},
+        ...
+    ]
+}}

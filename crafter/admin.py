@@ -1,6 +1,6 @@
 from django.contrib import admin
 from crafter.models import Course, CourseResource, CourseVersion, CourseVersionLearningOutcome, CourseModule, \
-    CourseModuleLearningOutcome, CourseModuleLearningActivity
+    CourseModuleLearningOutcome, CourseModuleLearningActivity, ModuleQuestion, ModuleResponseOption
 
 
 @admin.register(Course)
@@ -36,3 +36,11 @@ class CourseModuleLearningOutcomeAdmin(admin.ModelAdmin):
 @admin.register(CourseModuleLearningActivity)
 class CourseModuleLearningActivityAdmin(admin.ModelAdmin):
     list_display = ('course_module', 'title', 'description', 'order_by')
+
+@admin.register(ModuleQuestion)
+class ModuleQuestionAdmin(admin.ModelAdmin):
+    list_display = ('course_module', 'question')
+
+@admin.register(ModuleResponseOption)
+class ModuleResponseOptionAdmin(admin.ModelAdmin):
+    list_display = ('module_question', 'response', 'score')

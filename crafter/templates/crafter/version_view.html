@@ -18,8 +18,18 @@
     {% endfor %}
     </ol>
     <h3>{% trans 'Activities' %}</h3>
-
+    <ol>
+    {% for la in module.coursemodulelas.all  %}
+        <li><strong>{{ la.title }}</strong><br/>
+            {{ la.description }}</li>
+    {% endfor %}
+    </ol>
 
     <h3>{% trans 'Quiz Questions' %}</h3>
+    <ul>
+    {% for q in module.modulequestions.all  %}
+        <li>{{ q.question }}</li>
+    {% endfor %}
+     </ul>
 {% endfor %}
 {% endblock %}

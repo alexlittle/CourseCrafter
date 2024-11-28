@@ -1,6 +1,8 @@
 import os
 import ssl
 import http
+from operator import itemgetter
+
 import requests
 import socket
 import urllib3
@@ -8,7 +10,7 @@ from urllib import error
 
 from django.conf import settings
 from langchain_huggingface.embeddings import HuggingFaceEmbeddings
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from langchain_chroma import Chroma
 from langchain_ollama.llms import OllamaLLM
 from langchain_openai import ChatOpenAI
@@ -99,3 +101,25 @@ class CourseCrafterAI():
         )
 
         return rag_chain.invoke(question)
+
+    def create_module_activities(self, module_title, learning_outcomes, template='module_activities'):
+
+        rag_prompt = PromptTemplate.from_template(self.get_prompt_template(template))
+
+        retriever = self.vs.as_retriever(search_kwargs={"k": 10})
+
+        rag_chain = (
+                {"context": itemgetter("module_title") | retriever,
+                 "module_title":  itemgetter("module_title"),
+                 "learning_outcomes":  itemgetter("learning_outcomes"),
+                }
+
+                | rag_prompt
+                | self.llm
+                | JsonOutputParser()
+        )
+        inputs = {
+            "learning_outcomes": learning_outcomes,
+            "module_title": module_title,
+        }
+        return rag_chain.invoke(inputs)
