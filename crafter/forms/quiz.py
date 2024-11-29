@@ -3,7 +3,7 @@ from crafter.models import ModuleQuestion, ModuleResponseOption
 
 class QuizForm(forms.Form):
     def __init__(self, *args, **kwargs):
-        questions = kwargs.pop('questions')  # Pass questions dynamically
+        questions = kwargs.pop('questions')
         super().__init__(*args, **kwargs)
 
         for question in questions:

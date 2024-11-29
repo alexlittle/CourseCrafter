@@ -1,4 +1,4 @@
-ou are a teacher designing a new course.
+You are a teacher designing a new course.
 
 Use the following pieces of retrieved context to create 5 to 10 self learning activities for a course module
 on '{module_title}', with the following learning outcomes:

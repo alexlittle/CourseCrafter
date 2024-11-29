@@ -123,3 +123,20 @@ class CourseCrafterAI():
             "module_title": module_title,
         }
         return rag_chain.invoke(inputs)
+
+    def create_skill_sets(self, learning_outcomes, questions, template='skill_sets'):
+
+        rag_prompt = PromptTemplate.from_template(self.get_prompt_template(template))
+
+        rag_chain = (
+                {"questions":  itemgetter("questions"),
+                 "learning_outcomes":  itemgetter("learning_outcomes"),}
+                | rag_prompt
+                | self.llm
+                | JsonOutputParser()
+        )
+        inputs = {
+            "learning_outcomes": learning_outcomes,
+            "questions": questions,
+        }
+        return rag_chain.invoke(inputs)

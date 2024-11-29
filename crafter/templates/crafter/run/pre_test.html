@@ -13,13 +13,11 @@
 
 <h2>Pre-test</h2>
 
-{% for q in questions %}
-    <h3>{{ q.question }}</h3>
-    {% for r in q.questionresponses.all %}
-        <li>{{ r.response }}</li>
-    {% endfor %}
-{% endfor %}
+<form method="post">
+    {% csrf_token %}
 
-{{ form.as_p }}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
 
 {% endblock %}

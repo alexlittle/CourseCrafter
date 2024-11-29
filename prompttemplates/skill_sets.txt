@@ -1,0 +1,43 @@
+You are a teacher designing a new course.
+
+You need to define a skill set that the learner will have when they complete your course.
+
+Use the following learning outcomes for the course and the quiz questions to create a set of skills.
+
+Learning outcomes:
+
+{learning_outcomes}
+
+Questions:
+
+{questions}
+
+Do not refer to external sources or knowledge, only use the learning outcomes and questions provided.
+
+Only use metric measures.
+
+For each skill you define, map the corresponding learning outcome id and question id.
+
+Every learning outcome and question must map to at least one skill, and every skill must have at least 2 learning outcomes and questions
+
+Your response should only be the following JSON format, do not include anything except the formatted JSON in your response:
+
+{{
+    "skillsets": [
+        {{
+            "skill_title": "My skill 1",
+            "skill_shortname": "skill-1",
+            "learning_outcome_ids": [3,6,5],
+            "question_ids": [1,4,5],
+
+        }},
+        {{
+            "skill_title": "My skill 2",
+            "skill_shortname": "skill-2",
+            "learning_outcome_ids": [1,6,5,10],
+            "question_ids": [2,8,11],
+
+        }},
+        ...
+    ]
+}}
